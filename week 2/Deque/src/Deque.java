@@ -23,6 +23,9 @@ public class Deque<Item> implements Iterable<Item>{
     public void addFirst(Item item) {
         validateItem(item);
         dequeSize++;
+        if (isEmpty()) {
+            first = last;
+        }
         Node oldFirst = first;
         first.item = item;
         first.next = oldFirst;
