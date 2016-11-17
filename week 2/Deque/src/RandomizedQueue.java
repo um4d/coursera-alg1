@@ -1,6 +1,7 @@
 /**
  * Created by t.simonov on 16.11.16.
  */
+
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
     Item[] s;
@@ -27,7 +28,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         arraySize++;
         queueSize++;
     }
-    private void resize(int capacity) {
+    private void reduction(int capacity) {
         Item[] sCopy = s;
         s = (Item[]) new Object[capacity];
         for (int i = 0, j = 0; i < arraySize; i++) {
@@ -37,7 +38,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             }
         }
     }
-    public Item dequeue();                    // remove and return a random item
+
+    public Item dequeue() {
+        int n = StdRandom(0, arraySize);
+    }                    // remove and return a random item
     public Item sample();                     // return (but do not remove) a random item
     public Iterator<Item> iterator();         // return an independent iterator over items in random order
     public static void main(String[] args);   // unit testing
