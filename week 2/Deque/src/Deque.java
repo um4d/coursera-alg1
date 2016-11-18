@@ -1,7 +1,5 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 /**
  * Created by t.simonov on 10.11.16.
@@ -86,7 +84,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     private void validateDequeIsEmpty() {
         if (isEmpty()) {
-            throw new java.lang.NullPointerException();
+            throw new NoSuchElementException();
         }
     }
 

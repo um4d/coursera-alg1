@@ -1,14 +1,14 @@
 import java.util.Iterator;
-
+import edu.princeton.cs.algs4.StdRandom;
 /**
  * Created by t.simonov on 16.11.16.
  */
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    Item[] s;
-    int queueSize;
-    int arraySize;
+    private Item[] s;
+    private int queueSize;
+    private int arraySize;
 
     public RandomizedQueue() {
         s = (Item[]) new Object[1];
@@ -86,10 +86,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class ArrayIterator implements Iterator<Item> {
-        int n;
-        int[] iteratorArray;
+        private int n;
+        private int[] iteratorArray;
 
-        public ArrayIterator() {
+        private ArrayIterator() {
             iteratorArray = new int[queueSize];
             n = 0;
             for (int i = 0; i < arraySize; i++) {
@@ -116,6 +116,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 
     public static void main(String[] args) {
-        
+
     }   // unit testing
 }
