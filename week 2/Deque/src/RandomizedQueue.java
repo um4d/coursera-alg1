@@ -17,7 +17,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public boolean isEmpty() {
-        return s[0] == null;
+        return queueSize == 0;
     }
 
     public int size() {
@@ -31,8 +31,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (arraySize == s.length) {
             resize(s.length * 2);
         }
-        s[arraySize] = item;
-        arraySize++;
+        s[arraySize++] = item;
         queueSize++;
     }
 
@@ -45,12 +44,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private void reduction(int capacity) {
-        Item[] sCopy = s;
-        s = (Item[]) new Object[capacity];
-        for (int i = 0, j = 0; i < arraySize; i++) {
-            if (!(s[i] == null)) {
-                s[i] = sCopy[j];
-                j++;
+        if(capacity == 0) {
+            s = (Item[]) new Object[1];
+            queueSize = 0;
+            arraySize = 0;
+        } else {
+            Item[] sCopy = s;
+            s = (Item[]) new Object[capacity];
+            for (int i = 0, j = 0; i < arraySize; i++) {
+                if (j > queueSize) return;
+                if (!(sCopy[i] == null)) {
+                    s[j] = sCopy[i];
+                    j++;
+                }
             }
         }
         arraySize = queueSize;
