@@ -15,16 +15,13 @@ public class Point implements Comparable<Point> {
 
     private final int x;
     private final int y;
-    public final Comparator<Point> SLOPE_ORDER;
-
+    public final Comparator<Point> SLOPE_ORDER = slopeOrder();
 
     public Point(int x, int y) {
         /* DO NOT MODIFY */
         this.x = x;
         this.y = y;
-        SLOPE_ORDER = slopeOrder();
     }
-
 
     public void draw() {
         /* DO NOT MODIFY */
@@ -50,7 +47,7 @@ public class Point implements Comparable<Point> {
             return Double.POSITIVE_INFINITY;
         } else if (y0 == y1) {
             return +0.0;
-        } else return (y1 - y0) / (x1 - x0);
+        } else return (double)(y1 - y0) / (x1 - x0);
     }
 
     public int compareTo(Point that) {
@@ -65,7 +62,6 @@ public class Point implements Comparable<Point> {
             result = x1 - x0;
         }
         return result;
-
     }
 
     public Comparator<Point> slopeOrder() {
@@ -85,13 +81,10 @@ public class Point implements Comparable<Point> {
         }
     }
 
-
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
     }
-
-
 
     public static void main(String[] args) {
         /* YOUR CODE HERE */
