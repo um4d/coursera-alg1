@@ -23,13 +23,13 @@ public class BruteCollinearPoints {
                 for (int r = q + 1; r < len; r++) {
                     double prSlope = points[p].slopeTo(points[r]);
                     if (prSlope == pqSlope) {
-                        double qrSlope = points[q].slopeTo(points[r]);
+//                        double qrSlope = points[q].slopeTo(points[r]);
 //                        if (qrSlope == Double.NEGATIVE_INFINITY) continue;
                         for (int s = r + 1; s < len; s++) {
                             double psSlope = points[p].slopeTo(points[s]);
                             double rsSlope = points[r].slopeTo(points[s]);
                             if (rsSlope == pqSlope){
-                                double qsSlope = points[q].slopeTo(points[s]);
+//                                double qsSlope = points[q].slopeTo(points[s]);
 //                                if (psSlope == Double.NEGATIVE_INFINITY) continue;
 //                                if (qsSlope == Double.NEGATIVE_INFINITY) continue;
                                 LineSegment segment = new LineSegment(points[p], points[s]);
