@@ -16,47 +16,36 @@ public class FastCollinearPoints {
         Point[] copyPoints = new Point[len];
         System.arraycopy(points, 0, copyPoints, 0, len);
 
-        for (int i = 0; i < len - 1; i++) {
-
-            List<Point> monoSlope = new ArrayList<Point>();
-            System.out.println("new monoslope");
+        for (int i = 0; i < len; i++) {
 
             Point p = points[i];
-            Arrays.sort(copyPoints, p.SLOPE_ORDER);
+            Arrays.sort(copyPoints, p.slopeOrder());
+            int count = 2;
+            int f = 1;
 
             for (int j = 1; j < len - 1; j++) {
-                if (p.slopeTo(copyPoints[j]) == p.slopeTo(copyPoints[j + 1])) {
-                    monoSlope.add(copyPoints[j + 1]);
-                } else if (monoSlope.size() >= 4){
-                    lineSegments.add(new LineSegment(p, copyPoints[j + 1]));
-                    
+                if (p.slopeTo(copyPoints[j + 1]) == p.slopeTo(copyPoints[j])) {
+                    count++;
+                    if (j == len - 2 && count > 3) {
+                        lineSegments.add(new LineSegment(copyPoints[j - 1], copyPoints[j + count - 2]));
+                    }
+                } else if (count > 3) {
+                    lineSegments.add(new LineSegment(copyPoints[j - 1], copyPoints[j + count - 2]));
+                    j = j + count - 2;
+                    count = 2;
                 }
             }
         }
-
-
-
-
-//            for (int j = 1; j < len - 1; j++) {
-//                Point q = copyPoints[j];
-//                Point r = copyPoints[j + 1];
-//                Double curSlope = p.slopeTo(q);
-//
-//                monoSlope.add(p);
-//                monoSlope.add(q);
-//
-//                if (p.slopeTo(r) == curSlope) {
-//                    monoSlope.add(r);
-//                    if(monoSlope.size() == 4) {
-//                        lineSegments.add(new LineSegment(p, copyPoints[j]));
-//                        System.out.println(monoSlope.size());
-//                        monoSlope = new ArrayList<Point>();
-//                    }
-//                }
-//            }
-
     }
 
+    private boolean lineEqual(LineSegment line) {
+        for (LineSegment segment : lineSegments) {
+            if (segment.toString().equals(line.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int numberOfSegments() {
         return lineSegments.size();
@@ -64,12 +53,6 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() {
         LineSegment[] result = lineSegments.toArray(new LineSegment[numberOfSegments()]);
-        return  result;
+        return result;
     }
-//    private void validateSlopeOrder (Point[] points) {
-//        for (int i = 0; i < points.length - 1; i++) {
-//            System.out.println(points[i].slopeTo(points[i + 1]));
-//        }
-//    }
-
 }

@@ -15,7 +15,6 @@ public class Point implements Comparable<Point> {
 
     private final int x;
     private final int y;
-    public final Comparator<Point> SLOPE_ORDER = new SlopeComparator();
 
     public Point(int x, int y) {
         /* DO NOT MODIFY */
@@ -36,6 +35,10 @@ public class Point implements Comparable<Point> {
 
     public double slopeTo(Point that) {
 
+        if (that == null) {
+            throw new java.lang.NullPointerException();
+        }
+
         int x0 = this.x;
         int y0 = this.y;
         int x1 = that.x;
@@ -52,17 +55,22 @@ public class Point implements Comparable<Point> {
 
     public int compareTo(Point that) {
 
+        if (that == null) {
+            throw new java.lang.NullPointerException();
+        }
+
         int x0 = this.x;
         int y0 = this.y;
         int x1 = that.x;
         int y1 = that.y;
 
-        int result = y1 - y0;
+        int result = y0 - y1;
         if (result == 0) {
-            result = x1 - x0;
+            result = x0 - x1;
         }
         return result;
     }
+
 
     public Comparator<Point> slopeOrder() {
         return new SlopeComparator();
@@ -77,11 +85,6 @@ public class Point implements Comparable<Point> {
             double s1 = p.slopeTo(p1);
             double s2 = p.slopeTo(p2);
 
-//            if (s1 > s2)  {
-//                return 1;
-//            } else if (s1 < s2) {
-//                return -1;
-//            } else return 0;
             return Double.compare(s1, s2);
 
         }
