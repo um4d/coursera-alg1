@@ -13,38 +13,22 @@ public class FastCollinearPoints {
 
         int len = points.length;
         Arrays.sort(points);
-        Point[] copyPoints = new Point[len];
-        System.arraycopy(points, 0, copyPoints, 0, len);
+        Point[] copyPoints = points.clone();
 
-        for (int i = 0; i < len; i++) {
-
+        for (int i = 0; i < len - 3; i++) {
             Point p = points[i];
+            Arrays.sort(copyPoints);
             Arrays.sort(copyPoints, p.slopeOrder());
-            int count = 2;
-            int f = 1;
-
-            for (int j = 1; j < len - 1; j++) {
-                if (p.slopeTo(copyPoints[j + 1]) == p.slopeTo(copyPoints[j])) {
-                    count++;
-                    if (j == len - 2 && count > 3) {
-                        lineSegments.add(new LineSegment(copyPoints[j - 1], copyPoints[j + count - 2]));
-                    }
-                } else if (count > 3) {
-                    lineSegments.add(new LineSegment(copyPoints[j - 1], copyPoints[j + count - 2]));
-                    j = j + count - 2;
-                    count = 2;
+            for (int q = 1, r = 2; r < len; r++) {
+                while( r < len && p.slopeTo(copyPoints[q]) == p.slopeTo(copyPoints[r])) {
+                    r++;
                 }
+                if ((r - q >= 3) && p.compareTo(copyPoints[q]) < 0) {
+                    lineSegments.add(new LineSegment(p, copyPoints[r - 1]));
+                }
+                q = r;
             }
         }
-    }
-
-    private boolean lineEqual(LineSegment line) {
-        for (LineSegment segment : lineSegments) {
-            if (segment.toString().equals(line.toString())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public int numberOfSegments() {
