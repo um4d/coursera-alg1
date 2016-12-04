@@ -1,6 +1,8 @@
 /**
  * Created by t.simonov on 01.12.16.
  */
+import edu.princeton.cs.algs4.StdRandom;
+
 public class Board {
 
     private int[][] blocks;
@@ -53,7 +55,24 @@ public class Board {
         return true;
     }
 
-//    public Board twin()
+    public Board twin() {
+        Board twin = new Board(this.blocks.clone());
+        int i = StdRandom.uniform(blocks.length);
+        int j = StdRandom.uniform(blocks[0].length);
+        while (twin.getBlockValue(i, j) == 0) {
+            i = StdRandom.uniform(blocks.length);
+            j = StdRandom.uniform(blocks[0].length);
+        }
+        int m = StdRandom.uniform(blocks.length);
+        int n = StdRandom.uniform(blocks[0].length);
+        while (twin.getBlockValue(m, n) == 0) {
+            m = StdRandom.uniform(blocks.length);
+            n = StdRandom.uniform(blocks[0].length);
+        }
+        twin.blocks[i][j] = this.blocks[m][n];
+        twin.blocks[m][n] = this.blocks[i][j];
+        return twin;
+    }
 
     public boolean equals(Object y) {
 
