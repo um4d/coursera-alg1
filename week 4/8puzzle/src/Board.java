@@ -18,16 +18,14 @@ public class Board {
                 this.blocks[i][j] = blocks[i][j];
             }
         }
-
-
     }
-
 
     public int dimension() {
 
         return N;
 
     }
+
     public int hamming() {
 
         int hamming = 0;
@@ -47,8 +45,10 @@ public class Board {
         int result = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                int value = blocks[i][j];
-                result += Math.abs(getI(value) - i) + Math.abs(getJ(value) - j);
+                if (blocks[i][j] != 0) {
+                    int value = blocks[i][j];
+                    result += Math.abs(getI(value) - i) + Math.abs(getJ(value) - j);
+                }
             }
         }
         return result;
@@ -57,9 +57,10 @@ public class Board {
     public boolean isGoal() {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                int value = blocks[i][j];
-                if (value != goalValue(i, j)) {
-                    return false;
+                if (blocks[i][j] != 0) {
+                    if (blocks[i][j] != goalValue(i, j)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -105,17 +106,43 @@ public class Board {
 
     public Iterable<Board> neighbors() {
         ArrayList<Board> neighbors = new ArrayList<Board>();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (this.blocks[i][j] == 0) {
 
-
-
+                    if (i > 0) {
+                        Board topBoard = new Board(this.blocks.clone());
+                        topBoard.exch(i, j, i - 1, j);
+                        neighbors.add(topBoard);
+                    }
+                    if (j < N - 1) {
+                        Board rightBoard = new Board(this.blocks.clone());
+                        rightBoard.exch(i, j, i, j + 1);
+                        neighbors.add(rightBoard);
+                    }
+                    if (i < N - 1) {
+                        Board bottomBoard = new Board(this.blocks.clone());
+                        bottomBoard.exch(i, j, i + 1, j);
+                        neighbors.add(bottomBoard);
+                    }
+                    if (j > 0) {
+                        Board leftBoard = new Board(this.blocks.clone());
+                        leftBoard.exch(i, j, i, j - 1);
+                        neighbors.add(leftBoard);
+                    }
+                    return neighbors;
+                }
+            }
+        }
+        return null;
     }
-
-
+    
     public String toString() {
-        String result = "";
+        String result = N + "\n";
+        result += this.manhattan() + "\n";
         for (int[] block : blocks) {
             for (int value : block) {
-                result += value + "  ";
+                result += " " + value;
             }
             result += "\n";
         }
@@ -136,12 +163,25 @@ public class Board {
         return j;
     }
 
-
     private int getBlockValue (int i, int j) {
         return blocks[i][j];
     }
 
-    public static void main(String[] args) {
+    private void exch(int i1, int j1, int i2, int j2) {
 
+        int tmp = this.blocks[i1][j1];
+        this.blocks[i1][j1] = this.blocks[i2][j2];
+        this.blocks[i2][j2] = tmp;
+    }
+
+    public static void main(String[] args) {
+        int[][] block = {{1,2,3},{4,5,6},{7,8,0}};
+
+        Board box = new Board(block);
+        int x = 8;
+        System.out.println(box.toString());
+        for (Board board : box.neighbors()) {
+            System.out.println(board.toString());
+        }
     }
 }
