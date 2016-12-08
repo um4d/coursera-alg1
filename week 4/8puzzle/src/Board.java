@@ -72,11 +72,13 @@ public class Board {
         int i = StdRandom.uniform(N);
         int j = StdRandom.uniform(N);
         while (blocks[i][j] == 0) {
+            i = StdRandom.uniform(N);
             j = StdRandom.uniform(N);
         }
         int k = StdRandom.uniform(N);
         int m = StdRandom.uniform(N);
         while (blocks[k][m] == 0 || j == m) {
+            k = StdRandom.uniform(N);
             m = StdRandom.uniform(N);
         }
         twin.blocks[i][j] = this.blocks[k][m];
@@ -105,7 +107,7 @@ public class Board {
     }
 
     public Iterable<Board> neighbors() {
-        ArrayList<Board> neighbors = new ArrayList<Board>();
+        ArrayList<Board> neighbors = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (this.blocks[i][j] == 0) {
@@ -139,10 +141,11 @@ public class Board {
     
     public String toString() {
         String result = N + "\n";
-        result += this.manhattan() + "\n";
+//        result += this.manhattan() + "\n";
         for (int[] block : blocks) {
+            result += " ";
             for (int value : block) {
-                result += " " + value;
+                result += value + "  ";
             }
             result += "\n";
         }
